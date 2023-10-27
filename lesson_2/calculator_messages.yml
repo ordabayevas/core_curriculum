@@ -1,0 +1,31 @@
+eng: 
+  welcome: 'Welcome to Calculator! Enter your name:'
+  valid_name: 'Make sure to use a valid name.'
+  first_num: 'Enter first number:'
+  valid_num: 'Hmm...that doesnt look like a valid number'
+  second_num: 'Enter second number:'
+  operator_prompt: 'What kind of operation would you like to perform? 
+    1)add 
+    2)subtract 
+    3)multiply 
+    4)divide'
+  valid_operator: 'Must use 1, 2, 3 or 4'
+  another_operation: 'Do you want to perform another calculation? (Y to calculate again)'
+  farewell: 'Thank you for using this calculator. Good bye!'
+
+rus:
+  welcome: 'Добро пожаловать в Калькулятор! Введите ваше имя:'
+  valid_name: 'Обязательно используйте допустимое имя.'
+  first_num: 'Введите первое число:'
+  valid_num: 'Хм... это не похоже на действительный номер'
+  second_num: 'Введите второе число:'
+  operator_prompt: '
+   Какую операцию вы хотели бы выполнить?
+     1) добавить
+     2) вычесть
+     3) умножить
+     4) делить
+  '
+  valid_operator: 'Необходимо использовать 1, 2, 3 или 4'
+  another_operation: 'Хотите выполнить еще одно вычисление? (Y, чтобы вычислить еще раз)'
+  farewell: 'Спасибо, что воспользовались этим калькулятором. До свидания!'
