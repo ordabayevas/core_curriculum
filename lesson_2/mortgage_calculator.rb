@@ -9,42 +9,83 @@
 # - monthly payment
 
 # Formula:
-# monthly_payment = loan_amount * (monthly_interest_rate / (1 - (1 + monthly_interest_rate)**(-loan_duration_in_months)))
+# monthly_payment = amount * (interest / (1 - (1 + interest)**(-term)))
 
 def interest_calc(percentage)
-  return (percentage / 100) / 12
+  (percentage / 100) / 12
 end
 
 def term_calc(years)
-  return years * 12
+  years * 12
 end
 
-puts 'Welcome to Loan Calculator! Please enter following information for calculation.'
+def valid_number?(number)
+  number.to_i.to_s == number || number.to_f.to_s == number
+end
+
+def monthly_payment(amount, interest, term)
+  amount * (interest / (1 - ((1 + interest)**(-term))))
+end
+
+def prompt(message)
+  puts("=> #{message}")
+end
+
+prompt('Welcome to Loan Calculator!')
+prompt('Please enter following information for calculation.')
 
 loop do
-  puts ('Loan Amount: ')
-  loan_amount = gets.chomp.to_f
-
-  puts ('Interest Rate: ')
-  rate = gets.chomp.to_f
-  interest = interest_calc(rate)
-
-  puts ('Loan Term: ')
-  loan_term = gets.chomp.to_i
-  term = term_calc(loan_term)
-
-  payment = ''
-  def monthly_payment(amount, interest, term)
-    payment = amount * (interest / (1 - (1 + interest)**(-term)))
-    return payment
+  loan_amount_input = ''
+  loop do
+    prompt('Loan Amount: ')
+    loan_amount_input = gets.chomp
+    if valid_number?(loan_amount_input)
+      loan_amount_input = loan_amount_input.to_f
+      break
+    else
+      prompt('Please enter numerical input')
+    end
   end
 
-  result = monthly_payment(loan_amount, interest, term)
-  puts ("Your monthly payment is #{result}")
+  rate_input = ''
+  loop do
+    prompt('Interest Rate: ')
+    rate_input = gets.chomp
+    if valid_number?(rate_input)
+      rate_input = rate_input.to_f
+      break
+    else
+      prompt('Please enter numerical input')
+    end
+  end
 
-  puts ('Do you would like to calculate another loan payment?')
+  term_input_years = ''
+  term_input_months = ''
+  loop do
+    prompt('Loan Term:')
+    prompt('Enter in years:')
+    term_input_years = gets.chomp
+    prompt('Enter additional months: (if term only in years type 0)')
+    term_input_months = gets.chomp
+    if valid_number?(term_input_years && term_input_months)
+      term_input_years = term_input_years.to_f
+      break
+    else
+      prompt('Please enter numerical input')
+    end
+  end
+
+  interest = interest_calc(rate_input)
+  term = term_calc(term_input_years)
+  total_term = term + term_input_months.to_f
+  puts total_term
+
+  result = monthly_payment(loan_amount_input, interest, total_term)
+  prompt("Your monthly payment is #{result.round(2)}")
+
+  prompt('Calculate another loan payment? (to continue type Y)')
   answer = Kernel.gets.chomp
   break unless answer.downcase.start_with?('y')
 end
 
-puts ('Goodbye!')
+prompt('Goodbye!')
