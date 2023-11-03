@@ -1,16 +1,15 @@
 VALID_CHOICES = %w(rock paper scissors lizard spock)
 
+COMBINATIONS = { 
+  'rock' => ['scissors', 'lizard'],
+  'paper' => ['rock', 'spock'],
+  'scissors' => ['paper', 'lizard'],
+  'lizard' => ['spock', 'paper'],
+  'spock' => ['scissors', 'rock']
+}
+
 def win?(first, second)
-  (first == 'paper' && second == 'rock') ||
-    (first == 'rock' && second == 'scissors') ||
-    (first == 'scissors' && second == 'paper') ||
-    (first == 'scissors' && second == 'lizard') ||
-    (first == 'lizard' && second == 'spock') ||
-    (first == 'spock' && second == 'rock') ||
-    (first == 'paper' && second == 'lizard') ||
-    (first == 'scissors' && second == 'spock') ||
-    (first == 'lizard' && second == 'rock') ||
-    (first == 'spock' && second == 'paper')
+  COMBINATIONS[first].include?(second)
 end
 
 def display_results(player, computer)
