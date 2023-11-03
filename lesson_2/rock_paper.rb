@@ -1,5 +1,13 @@
 VALID_CHOICES = %w(rock paper scissors lizard spock)
 
+ABBREVIATIONS = {
+  'r' => 'rock',
+  'p' => 'paper',
+  'sc' => 'scissors',
+  'l' => 'lizard',
+  'sp' => 'spock'
+}
+
 COMBINATIONS = { 
   'rock' => ['scissors', 'lizard'],
   'paper' => ['rock', 'spock'],
@@ -29,10 +37,13 @@ end
 loop do
   choice = ''
   loop do
-    prompt("Choose one: #{VALID_CHOICES.join(', ')}")
+    prompt("Choose one: #{VALID_CHOICES.join(', ')} (or print first letter)")
     choice = Kernel.gets().chomp()
 
     if VALID_CHOICES.include?(choice)
+      break 
+    elsif ABBREVIATIONS.include?(choice)
+      choice = ABBREVIATIONS[choice]
       break
     else
       prompt('Not a valid choice')
