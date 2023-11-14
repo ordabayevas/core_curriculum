@@ -9,3 +9,10 @@ def reversed_number(number)
 end
 
 p reversed_number(122)
+
+# LS solution
+def reversed_number(number)
+  string = number.to_s
+  reversed_string = string.reverse
+  reversed_string.to_i
+end
