@@ -187,12 +187,120 @@ arr = [1, 2, 3, 4]
 
 # puts stringy(6) == '101010'
 
-num = 1
+# num = 1
 
-loop do |num|
-  puts num
-  num = 2
-  break
+# loop do |num|
+#   puts num
+#   num = 2
+#   break
+# end
+
+# puts num # => 1
+
+# def ass(num)
+#   num += 3
+# end
+
+# a = 5
+# a = value_method(a)
+# p a
+
+# arr = [1]
+
+# for i in arr do
+#   a = 'World'
+# end
+
+# puts a
+
+# def increment(a)
+#     p a.object_id
+#     a = a + 1
+#   end
+#   b = 3
+#   p b.object_id
+#   puts increment(b)    # prints 4
+#   puts b               # prints 3
+
+# loop do |element| # 1st block
+#   var1 = 2
+
+#   loop do |element2| # 2nd block
+# 	var2 = 3
+# 	puts var1
+# 	break
+#   end
+
+#   #puts var2
+#   break
+# end
+
+# num = 1
+
+# num.times do |num| # to fix change this parameter to |_|
+#   puts "#{num * 100}" # outputs a 0, while should be a 100
+# end
+
+# a = 'ab'
+# b = a 
+# b += 'c'
+
+# p a # 'ab'
+# p b # 'abc'
+
+# a = 5
+
+# loop do
+#   a = 3
+#   b = 10
+#   break
+# end
+
+# p a # 3
+# p b
+
+# a = 5
+
+# def add
+#   a + 4
+# end
+
+# p a
+# p add
+
+# loop do |x|
+#   x = 4
+#   p x
+#   break
+# end
+
+# loop do |x|
+#   x = 10
+#   p x
+#   break
+# end
+
+# def add(num)
+#   num += 1
+# end
+  
+# a = 1
+# p add(a) # 2
+# p a # 1
+
+# def append(str)
+#     str.concat('!')
+#   end
+  
+#   a = 'hello'
+#   p append(a)
+#   p a
+
+a = 1
+5.times do
+  puts a
+  b = 2
 end
 
-puts num # => 1
+puts a # 1 1 1 1 1 and 1 as caller itself
+puts b
