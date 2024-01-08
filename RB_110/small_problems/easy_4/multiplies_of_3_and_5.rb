@@ -38,12 +38,34 @@
 # 5. Return the sum of all numbers in 'multipliers'.
 
 # C
+# def multisum(integer)
+#   all_numbers = (1..integer).to_a
+#   multipliers = all_numbers.select do |number|
+#     (number % 3 == 0) || (number % 5 == 0)
+#   end
+#   multipliers.sum # sum = 0 -> multipliers.each {|num| sum += num}
+# end
+
+# p multisum(3) #== 3
+# p multisum(5) #== 8
+# p multisum(10) #== 33
+# p multisum(1000) #== 234168
+
+# Investigate Enumerable.reduce. 
+# How might this method be useful in solving this problem? 
+# (Note that Enumerable methods are available when working with Arrays.) 
+# Try writing such a solution. Which is clearer? Which is more succinct?
+
+# Note that #inject is an alias for #reduce. 
+# The two methods work identically. We mostly use #reduce in our curriculum, 
+# but it's worth noting that the documentation uses #inject.
+
 def multisum(integer)
   all_numbers = (1..integer).to_a
   multipliers = all_numbers.select do |number|
     (number % 3 == 0) || (number % 5 == 0)
   end
-  multipliers.sum # sum = 0 -> multipliers.each {|num| sum += num}
+  multipliers.inject(:+) # sum = 0 -> multipliers.each {|num| sum += num}
 end
 
 p multisum(3) #== 3
