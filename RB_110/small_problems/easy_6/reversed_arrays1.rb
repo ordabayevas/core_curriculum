@@ -86,3 +86,13 @@ p list == [] # true
 
 #   array
 # end
+
+def reverse!(array)
+  i = 0
+  while i < array.size / 2
+    j = -1 -i
+    array[i], array[j] = array[j], array[i]
+    i +=1
+  end
+  array
+end
