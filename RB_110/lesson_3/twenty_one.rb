@@ -70,6 +70,13 @@ def display_results(boolean, player_nums, dealer_nums)
   prompt "Dealer score is #{dealer_nums.sum}."
 end
 
+def play_again?
+  puts "-------------"
+  prompt "Do you want to play again? (y or n)"
+  answer = gets.chomp
+  answer.downcase.start_with?('y')
+end
+
 def player_hits_card(deck, player_hand, player_nums)
   loop do
     # binding.pry
@@ -93,6 +100,8 @@ def player_hits_card(deck, player_hand, player_nums)
 end
 
 loop do
+  prompt "Welcome to Twenty-One!"
+  
   deck = initialize_deck
 
   player_hand = deal_cards(deck)
@@ -116,14 +125,10 @@ loop do
   prompt "Your cards total is #{player_nums.sum}."
 
   if player_nums.sum > 21
-    prompt 'Want to play again? (y / n)'
-    again = gets.chomp
-    break unless again.start_with?('y')
-
-    next
+    play_again? ? next : break
   end
 
-  prompt "Now Dealer's turn to choose: hit or stay"
+  prompt "Now Dealer's turn to choose..."
   # binding.pry
   while dealer_nums.sum <= 17
     prompt 'Dealer takes a card.'
@@ -138,11 +143,7 @@ loop do
   end
 
   if dealer_nums.sum > 21
-    prompt 'Want to play again? (y / n)'
-    again = gets.chomp
-    break unless again.start_with?('y')
-
-    next
+    play_again? ? next : break
   end
 
   prompt 'Dealer stays.'
@@ -151,9 +152,7 @@ loop do
   result = comparing_results(player_nums, dealer_nums)
   display_results(result, player_nums, dealer_nums)
 
-  prompt 'Want to play again? (y / n)'
-  again = gets.chomp
-  break unless again.start_with?('y')
+  break unless play_again?
 end
 
 prompt 'Thanks for the game!'
