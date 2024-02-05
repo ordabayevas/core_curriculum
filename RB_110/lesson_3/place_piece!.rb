@@ -51,15 +51,9 @@ def alternate_player(current_player)
   end
 end
 
-
-
-
-
-
-
-def first_move_computer(brd)
-  first = 5
-  second = empty_squares(brd).sample
-  square = [first, second].sample
-  brd[square] = COMPUTER_MARKER
-end
+# def first_move_computer(brd)
+#   first = 5
+#   second = empty_squares(brd).sample
+#   square = [first, second].sample
+#   brd[square] = COMPUTER_MARKER
+# end

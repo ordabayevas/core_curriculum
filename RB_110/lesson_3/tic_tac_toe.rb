@@ -1,4 +1,3 @@
-# step 1 - display the board
 require 'pry'
 require 'pry-byebug'
 
@@ -39,7 +38,6 @@ def initialize_board
   new_hash
 end
 
-# step 2 - ask user to mark a square
 def empty_squares(brd)
   brd.keys.select { |num| brd[num] == INITIAL_MARKER }
 end
@@ -56,18 +54,6 @@ def joinor(array, sign=', ', word='or')
     new_array.each { |num| new_string << "#{num}#{sign}" }
     new_string << last_element
   end
-end
-
-def player_places_piece!(brd)
-  square = ''
-  loop do
-    prompt "Choose a position to place a piece: #{joinor(empty_squares(brd))}"
-    square = gets.chomp.to_i
-    break if empty_squares(brd).include?(square)
-
-    prompt 'Sorry, this is not a valid input.'
-  end
-  brd[square] = PLAYER_MARKER
 end
 
 def find_at_risk_square(line, brd) # input - every line and board, output - place to mark
@@ -94,42 +80,10 @@ def offense(line, brd)
   end
 end
 
-# step 3 - main game
-def computer_places_piece!(brd)
-  square = nil
-  WINNING_LINES.each do |line|
-    square = offense(line, brd)
-    break if square != nil
-  end
-
-  if square == nil
-    WINNING_LINES.each do |line|
-      square = find_at_risk_square(line, brd)# empty place
-      break if square != nil
-    end
-  end
-
-  if square == nil && brd[5] == INITIAL_MARKER
-    square = 5
-  elsif square == nil && brd[5] != INITIAL_MARKER
-    square = empty_squares(brd).sample
-  end
-
-  brd[square] = COMPUTER_MARKER
-end
-
 def board_full?(brd)
   empty_squares(brd).empty?
 end
 
-def first_move_computer(brd)
-  first = 5
-  second = empty_squares(brd).sample
-  square = [first, second].sample
-  brd[square] = COMPUTER_MARKER
-end
-
-# step 4 - determining a winner
 def detect_winner(brd)
   WINNING_LINES.each do |line| # [1, 2, 3]
     if brd.values_at(line[0], line[1], line[2]).count(PLAYER_MARKER) == 3
@@ -145,21 +99,13 @@ def someone_won?(brd)
   !!detect_winner(brd) # '!!' is to return boolean value
 end
 
-def main_steps(brd)
+def main_steps(brd, current_player)
   loop do
     display_board(brd)
-    player_places_piece!(brd)
-    break if someone_won?(brd) || board_full?(brd)
-
-    computer_places_piece!(brd)
+    place_piece!(brd, current_player)
+    current_player = alternate_player(current_player)
     break if someone_won?(brd) || board_full?(brd)
   end
-  # loop do
-  #   display_board(board)
-  #   place_piece!(board, current_player)
-  #   current_player = alternate_player(current_player)
-  #   break if someone_won?(board) || board_full?(board)
-  # end
 end
 
 def who_goes_first(iteration_num)
@@ -175,23 +121,64 @@ def who_goes_first(iteration_num)
   end
 end
 
-# step 5 - play again
+def place_piece!(brd, current_player)
+  if current_player.start_with?('p')
+    square = ''
+    loop do
+      prompt "Choose a position to place a piece: #{joinor(empty_squares(brd))}"
+      square = gets.chomp.to_i
+      break if empty_squares(brd).include?(square)
+  
+      prompt 'Sorry, this is not a valid input.'
+    end
+    brd[square] = PLAYER_MARKER
+  elsif current_player.start_with?('c')
+    square = nil
+    WINNING_LINES.each do |line|
+      square = offense(line, brd)
+      break if square != nil
+    end
+  
+    if square == nil
+      WINNING_LINES.each do |line|
+        square = find_at_risk_square(line, brd)# empty place
+        break if square != nil
+      end
+    end
+  
+    if square == nil && brd[5] == INITIAL_MARKER
+      square = 5
+    elsif square == nil && brd[5] != INITIAL_MARKER
+      square = empty_squares(brd).sample
+    end
+  
+    brd[square] = COMPUTER_MARKER
+  end
+end
+
+def alternate_player(current_player)
+  if current_player.start_with?('p')
+    current_player = 'c'
+  elsif current_player.start_with?('c')
+    current_player = 'p'
+  end
+end
+
 player_score = 0
 computer_score = 0
 iteration_num = 0
 
 loop do
-  # binding.pry
   board = initialize_board
   display_board(board)
   iteration_num += 1
   first_move_maker = who_goes_first(iteration_num)
+  current_player = first_move_maker
 
   if first_move_maker.start_with?('p')
-    main_steps(board)
+    main_steps(board, current_player)
   elsif first_move_maker.start_with?('c')
-    first_move_computer(board)
-    main_steps(board)
+    main_steps(board, current_player)
   else
     prompt("Invalid choice. Try again")
     next
