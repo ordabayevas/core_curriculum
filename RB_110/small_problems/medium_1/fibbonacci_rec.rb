@@ -31,10 +31,8 @@ def fibonacci(n) # 4
   #binding.pry
   if n >= 2
     fibonacci(n-1) + fibonacci(n-2)
-  elsif n == 1 
-    1
-  else 
-    0
+  else
+    n
   end
 end
 
