@@ -37,28 +37,28 @@
 require 'pry'
 require 'pry-byebug'
 
-# def longest_sentence(text)
-#   words = text.split
-#   new = []
-#   temp = []
-#   words.each do |word|
-#     # binding.pry
-#     temp << word
-#     if word.include?('.') || word.include?('!') || word.include?('?')
-#       new << temp
-#       temp = []
-#     end
-#   end
-#   #binding.pry
+def longest_sentence(text)
+  words = text.split
+  new = []
+  temp = []
+  words.each do |word|
+    # binding.pry
+    temp << word
+    if word.include?('.') || word.include?('!') || word.include?('?')
+      new << temp
+      temp = []
+    end
+  end
+  #binding.pry
 
-#   longest = new.sort_by { |sentence| sentence.size }[-1]
-#   puts longest.join(' ')
-#   puts "#{longest.size} words"
+  longest = new.sort_by { |sentence| sentence.size }[-1]
+  puts longest.join(' ')
+  puts "#{longest.size} words"
 
-#   # new
-# end
+  # new
+end
 
-# text = File.read('frankestein.txt') #??
+text = File.read('frankenstein.txt')
 
-# longest_sentence(text)
+longest_sentence(text)
 

@@ -39,3 +39,28 @@ p balanced?('Hey!') == true
 p balanced?(')Hey!(') == false
 p balanced?('What ((is))) up(') == false
 p balanced?('What ())(is() up') == false
+
+
+# Further exploration (not mine) 
+def balanced1?(string)
+  brackets = {
+    parens: { open: '(', closed: ')', count: 0 },
+    square: { open: '[', closed: ']', count: 0 },
+    curly: { open: '{', closed: '}', count: 0 }
+  }
+  type_balanced?(string, brackets[:parens]) &&
+    type_balanced?(string, brackets[:square]) &&
+    type_balanced?(string, brackets[:curly])
+end
+
+def type_balanced?(string, type)
+  string.each_char do |char|
+    if char == type[:open]
+      type[:count] += 1 
+    elsif char == type[:closed]
+      type[:count] -= 1
+    end
+    return false if type[:count] < 0
+  end
+  type[:count].zero?
+end
