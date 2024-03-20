@@ -31,8 +31,66 @@ Example:
 
 =begin
 P
-Input:
-Output:
+Input: 3 nums -> height of ball fall, bounce power, mother's window
+Output: integer -> num of times when mother able to see the ball
+
+Rules:
+- find all times when mother saw the ball, including falling and bouncing
+- calculate times of bounce
+- return integer
+
+E
+3, 0.66, 1.5 -> 3 * 0.66 = 1.98, 1.98 * 0.66 = 1.32 which is less than 1.5
+1 time bounce on mother's height, 2 times fall
+
+30, 0.75, 1.5 -> 
+30 * 0.75 = 22.5, down and up to 22.5
+22.5 * 0.75 = 16.875, down and up 
+16.875* 0.75 = 12.65625, down and up
+12.65625* 0.75 = 9.4921875, down and up
+9.4921875 * 0.75 = 7.119140625, down and up
+7.119140625 * 0.75 = 5.33935546875, down and up
+5.33935546875 * 0.75 = 4.0045166015625, down and up
+4.0045166015625 * 0.75 = 3.003387451171875, down and up
+3.003387451171875 * 0.75 = 2.2525405883789062, down and up
+2.2525405883789062 * 0.75 = 1.6894054412841797, down and up and down
+
+10
+1.6894054412841797 * 0.75 = 1.2670540809631348 lower than mother's window
+
+
+1, 0.66, 0.66 -> 1*0.66 = 0.66
+
+D
+integer
+
+A
+- CALCULATE the number of bouncing
+  - height multiply by bounce power till height is become smaller than mother's window
+  - create a counter variable
+  - add +2 by every bounce
+- ADD times of falling
+  - add 1
+- RETURN the total num
+=end
+
+# C
+def bouncingBall(height, bounce, mother)
+  if bounce >= 1 || bounce < 0 || height <= 0 || mother <= 0 || (height * bounce ) < mother
+    return -1
+  end
+  
+  counter = 0
+  height = height * bounce
+  loop do
+    break if height <= mother
+    height = height * bounce
+    counter += 2
+  end
+  counter + 1
+end
+
+p bouncingBall(30, 0.75, 1.5) == 21
 p bouncingBall(3, 0.66, 1.5) == 3
 p bouncingBall(30, 0.66, 1.5) == 15
 p bouncingBall(30, 0.75, 1.5) == 21
