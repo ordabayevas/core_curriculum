@@ -1,0 +1,205 @@
+class Rock
+  def rock
+    'rock'
+  end
+end
+
+class Scissors
+  def scissors
+    'scissors'
+  end
+end
+
+class Paper
+  def paper
+    'paper'
+  end
+end
+
+class Lizard
+  def lizard
+    'lizard'
+  end
+end
+
+class Spock
+  def spock
+    'spock'
+  end
+end
+
+class Move
+  VALUES = [Spock.new.spock, Lizard.new.lizard, Scissors.new.scissors, Paper.new.paper, Rock.new.rock]
+
+  def initialize(value)
+    @value = value
+    @rock = Rock.new.rock
+    @paper = Paper.new.paper
+    @scissors = Scissors.new.scissors
+    @lizard = Lizard.new.lizard
+    @spock = Spock.new.spock
+  end
+
+  def scissors?
+    @value == @scissors
+  end
+
+  def rock?
+    @value == @rock
+  end
+
+  def paper?
+    @value == @paper
+  end
+
+  def lizard?
+    @value == @lizard
+  end
+
+  def spock?
+    @value == @spock
+  end
+
+  def >(other)
+    (rock? && other.lizard?) ||
+      (paper? && other.rock?) ||
+      (scissors? && other.paper?) ||
+      (lizard? && other.spock?) ||
+      (spock? && other.scissors?) ||
+      (lizard? && other.paper?) ||
+      (scissors? && other.lizard?) ||
+      (spock? && other.rock?) ||
+      (rock? && other.scissors?) ||
+      (paper? && other.spock?)
+  end
+
+  def <(other)
+    (rock? && other.paper?) ||
+      (paper? && other.scissors?) ||
+      (scissors? && other.rock?) ||
+      (rock? && other.spock?) ||
+      (paper? && other.lizard?) ||
+      (scissors? && other.spock?) ||
+      (spock? && other.lizard?) ||
+      (spock? && other.paper?) ||
+      (lizard? && other.scissors?) ||
+      (lizard? && other.rock?)
+  end
+
+  def to_s
+    @value
+  end
+end
+
+class Player
+  attr_accessor :move, :name, :all_moves
+
+  def initialize
+    set_name
+    @all_moves = []
+  end
+end
+
+class Human < Player
+  def set_name
+    n = ''
+    loop do
+      puts "What's your name?"
+      n = gets.chomp
+      break unless n.empty?
+
+      puts 'Sorry, please enter a value.'
+    end
+    self.name = n
+  end
+
+  def choose
+    choice = nil
+    loop do
+      puts 'Please choose one: rock, paper, lizard, spock or scissors'
+      choice = gets.chomp
+      break if Move::VALUES.include?(choice)
+      puts 'Sorry, invalid choice.'
+    end
+
+    self.move = Move.new(choice)
+  end
+end
+
+class Computer < Player
+  def set_name
+    self.name = %w[Chappie R2D2 Hal].sample
+  end
+
+  def choose
+    self.move = Move.new(Move::VALUES.sample)
+  end
+end
+
+class RPSGame
+  attr_accessor :human, :computer
+
+  def initialize
+    @human = Human.new
+    @computer = Computer.new
+  end
+
+  def display_welcome_message
+    puts 'Welcome to Rock, Paper, Scissors, Lizard, Spock!'
+  end
+
+  def display_goodbye_message
+    puts 'Thanks for playing Rock, Paper, Scissors, Lizard, Spock. Good bye!'
+  end
+
+  def display_winner
+    if human.move > computer.move
+      puts "#{human.name} won!"
+    elsif human.move < computer.move
+      puts "#{computer.name} won!"
+    else
+      puts "It's a tie!"
+    end
+  end
+
+  def display_moves
+    puts "#{human.name} chose #{human.move}."
+    puts "#{computer.name} chose #{computer.move}."
+    human.all_moves << human.move.to_s
+    computer.all_moves << computer.move.to_s
+    puts "Human moves: #{human.all_moves}"
+    puts "Computer moves: #{computer.all_moves}"
+  end
+
+  def play_again?
+    answer = nil
+    loop do
+      puts 'Do you want to play again? (y / n)'
+      answer = gets.chomp
+      break if %w[y n].include?(answer.downcase)
+
+      puts 'Sorry, must be y or n.'
+    end
+
+    return true if answer == 'y'
+
+    return false
+  end
+
+  def play
+    display_welcome_message
+
+    loop do
+      human.choose
+      computer.choose
+      display_moves
+      display_winner
+      break unless play_again?
+    end
+    
+    display_goodbye_message
+    
+  end
+end
+
+RPSGame.new.play
