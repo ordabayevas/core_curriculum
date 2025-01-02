@@ -1,0 +1,27 @@
+<!doctype html>
+<html>
+
+<body>
+  <h3>Public folder's files</h3>
+
+  <ul>
+  <% @files.each do |file| %>
+    <li>
+      <a href="<%= file %>"><%= file %></a>
+    </li>
+  <% end %>
+  </ul>
+
+  <p>
+  <% if params[:sort] == "desc" %>
+    <a href="/">Sort ascending</a>
+  <% else %>
+    <a href="/?sort=desc">Sort descending</a>
+  <% end %>
+  </p>
+
+  <p>
+  <%= params%>
+  </p>
+</body>
+</html>
