@@ -1,0 +1,15 @@
+<!doctype html>
+<html>
+
+<body>
+  <h3><%= @title %></h3>
+
+  <ul>
+  <% @file.each do |key, _| %>
+    <li>
+      <a href="/<%= key %>"><%= key.to_s.capitalize + "\n" %></a>
+    </li>
+  <% end %>
+  </ul>
+</body>
+</html>

@@ -1,0 +1,57 @@
+<!doctype html>
+<html>
+  <head>
+    <h3 class="content-subhead"><%= @title%></h3>
+      <style>
+      html, body {
+        height: 100%;
+        margin: 0;
+        display: flex;
+        flex-direction: column;
+      }
+
+      main {
+        flex: 1;
+      }
+
+      footer {
+        background-color: #333;
+        color: white;
+        text-align: left;
+        padding: 10px;
+      }
+
+      footer a {
+        color: #00bcd4;
+        text-decoration: none;
+        margin: 0 5px;
+      }
+
+      footer a:hover {
+        text-decoration: underline;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div>
+      <p><%= "The email: " + @email %></p>
+      <p><%= "The interests: " + @interests[0..-2].map {|interest| interest + ", "}.join + @interests.last%></p>
+    </div>
+
+    <footer>
+    <p>Other users:</p>
+    <% other_users = @users.select {|username| username != params[:name].to_sym}%>
+    
+    <nav>
+      <ul>
+        <% other_users.each do |username| %>
+          <li>
+          <a href="/<%= username %>"><%= username.to_s.capitalize %></a>
+          </li>
+        <%end%>
+      <ul>
+    </nav>
+  </footer>
+  </body>
+</html>

@@ -1,0 +1,39 @@
+<!doctype html>
+<html>
+  <head>
+  <style>
+      html, body {
+        height: 100%;
+        margin: 0;
+        display: flex;
+        flex-direction: column;
+      }
+
+      main {
+        flex: 1;
+      }
+
+      footer {
+        text-align: left;
+        padding: 10px;
+      }
+
+      footer a {
+        color: #00bcd4;
+        text-decoration: none;
+        margin: 0 5px;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div id="layout">
+      <%= yield %>
+    </div>
+
+    <footer>
+      <p>There are <%= @users.size %> users with a total of <%= @total_int %> interests.</p>
+    </footer>
+  </body>
+
+
